@@ -192,9 +192,9 @@ XGB = XGBClassifier(learning_rate=0.08,
                     colsample_bytree=0.5)
 ```
 
-![image-20240513162359047](C:/Users/Administrator/Documents/Data-Foundation/figures/image-20240513162359047.png)
+![image-20240513162359047](./figures/image-20240513162359047.png)
 
-![image-20240513162433345](C:/Users/Administrator/Documents/Data-Foundation/figures/image-20240513162433345.png)
+![image-20240513162433345](./figures/image-20240513162433345.png)
 
 ```python
 x_train, x_test, y_train, y_test = train_test_split(train_data,
@@ -209,9 +209,9 @@ XGB = XGBClassifier(learning_rate=0.08,
                     colsample_bytree=0.5)
 ```
 
-![image-20240513161838348](C:/Users/Administrator/Documents/Data-Foundation/figures/image-20240513161838348.png)
+![image-20240513161838348](./figures/image-20240513161838348.png)
 
-![image-20240513161936673](C:/Users/Administrator/Documents/Data-Foundation/figures/image-20240513161936673.png)
+![image-20240513161936673](./figures/image-20240513161936673.png)
 
 ```python
 x_train, x_test, y_train, y_test = train_test_split(train_data,
@@ -226,9 +226,9 @@ XGB = XGBClassifier(learning_rate=0.08,
                     colsample_bytree=0.5)
 ```
 
-![image-20240513163057835](C:/Users/Administrator/Documents/Data-Foundation/figures/image-20240513163057835.png)
+![image-20240513163057835](./figures/image-20240513163057835.png)
 
-![image-20240513163105998](C:/Users/Administrator/Documents/Data-Foundation/figures/image-20240513163105998.png)
+![image-20240513163105998](./figures/image-20240513163105998.png)
 
 ## 实验结果
 
