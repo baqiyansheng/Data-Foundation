@@ -177,64 +177,69 @@ sub.to_csv('XGB_submission.csv')
 
 ## 调参过程
 
-针对XGBoost模型进行调参，结果如下：
+下面以随机森林模型为例，展示调参过程：
 
 ```python
 x_train, x_test, y_train, y_test = train_test_split(train_data,
                                                     train_data_target,
                                                     test_size=0.2,
                                                     random_state=42)
-XGB = XGBClassifier(learning_rate=0.08,
-                    n_estimators=50,
-                    max_depth=5,
-                    gamma=0,
-                    subsample=0.9,
-                    colsample_bytree=0.5)
+rfc = RFC(random_state=42,
+          max_depth=6)  # rfc
 ```
 
-![image-20240513162359047](./figures/image-20240513162359047.png)
+只演示调整以下参数：
 
-![image-20240513162433345](./figures/image-20240513162433345.png)
+- `test_size`：设置验证集占比。
+- `max_depth`：设置树的最大深度，影响模型的性能和计算效率。
 
-```python
-x_train, x_test, y_train, y_test = train_test_split(train_data,
-                                                    train_data_target,
-                                                    test_size=0.1,
-                                                    random_state=42)
-XGB = XGBClassifier(learning_rate=0.08,
-                    n_estimators=50,
-                    max_depth=5,
-                    gamma=0,
-                    subsample=0.9,
-                    colsample_bytree=0.5)
-```
+![image-20240626161350878](.\figures\image-20240626161350878.png)
 
-![image-20240513161838348](./figures/image-20240513161838348.png)
+调整训练集、验证集比例为9:1，结果如下：
 
-![image-20240513161936673](./figures/image-20240513161936673.png)
+![image-20240626161528523](C:\Users\jy\AppData\Roaming\Typora\typora-user-images\image-20240626161528523.png)
 
-```python
-x_train, x_test, y_train, y_test = train_test_split(train_data,
-                                                    train_data_target,
-                                                    test_size=0.1,
-                                                    random_state=42)
-XGB = XGBClassifier(learning_rate=0.08,
-                    n_estimators=50,
-                    max_depth=3,
-                    gamma=0,
-                    subsample=0.9,
-                    colsample_bytree=0.5)
-```
+提高了模型的召回率，减少了假正率，降低了误判的可能性。说明之前分数低可能是样本学习不够导致的。
 
-![image-20240513163057835](./figures/image-20240513163057835.png)
+下面针对max_depth进行调参：
 
-![image-20240513163105998](./figures/image-20240513163105998.png)
+![image-20240626164804319](.\figures\image-20240626164804319.png)
+
+可以看到，随着max_depth的增加，模型结果显著提升，但是到达15之后，模型的效果提升就不明显了。说明之前的决策树深度太小，导致模型没有很好地学习到样本的特征，导致分类效果很差。
+
+max_depth取15的时候，结果如下：
+
+![image-20240626165055756](.\figures\image-20240626165055756.png)
 
 ## 实验结果
 
-五种模型下，除了随机森林算法的F1值为0.997,其余四种模型在四舍五入后的F1值均为1.0，且提交后得分均接近1.0（还是就是1？？）由于决策树的模型较为简单，用时最短，其余用时较长。
+### 验证结果
 
-可以看出本小组给出的五个模型都可以很好的完成题目的任务。
+|          | Acc    | Precision | Recall | F1     | Time    |
+| -------- | ------ | --------- | ------ | ------ | ------- |
+| 决策树   | 1.0    | 1.0       | 1.0    | 1.0    | 4.6s    |
+| 随机森林 | 0.9998 | 1.0       | 0.9889 | 0.9944 | 1m41.8s |
+| Ada      | 1.0    | 1.0       | 1.0    | 1.0    | 3m57.7s |
+| GBDT     | 1.0    | 1.0       | 1.0    | 1.0    | 6m29.3s |
+| XGBoost  | 1.0    | 1.0       | 1.0    | 1.0    | 26.0s   |
+
+处随机森林模型外，验证集上的结果都达到了1.0，而随机森林的各项指标也达到了0.99以上。说明模型在验证集上的效果很好。
+
+从运行时间角度来看，决策树、XGBoost两个模型的运行比较快，预测的效率较高。
+
+#### 提交结果
+
+![image-20240626145326426](.\figures\image-20240626145326426.png)
+
+![image-20240626145348681](.\figures\image-20240626145348681.png)
+
+![image-20240626145417834](.\figures\image-20240626145417834.png)
+
+![image-20240626145546068](.\figures\image-20240626145546068.png)
+
+![image-20240626145527956](.\figures\image-20240626145527956.png)
+
+五种模型下，除了随机森林算法的F1值为0.997，其余四种模型都十分接近于1.0的得分。可以看出本小组给出的五个模型都可以很好的完成题目的任务。
 
 ## 参考链接
 
